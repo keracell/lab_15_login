@@ -20,16 +20,17 @@ Future<void> getNewToken() async {
   );
 
   if (response.statusCode >= 400) {
+    await db.update('tokens', {'access_token': '', 'refresh_token': ''});
     throw Exception("Error");
   }
 
   final Map<String, dynamic> data = json.decode(response.body);
   final accessToken = data['accessToken'];
-  final refreshToken = data['refreshToken'];
+  //final refreshToken = data['refreshToken'];
 
   await db.update('tokens', {
     'access_token': accessToken,
-    'refresh_token': refreshToken,
+    // 'refresh_token': refreshToken,
   });
 }
 
@@ -52,6 +53,9 @@ Future<T> get<T>(Uri url, {bool retry = false}) async {
   }
 
   if (response.statusCode >= 400) {
+    print(' ===== error ==== ');
+    print(response.statusCode);
+    print(response.body);
     throw Exception("Error");
   }
 

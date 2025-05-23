@@ -32,9 +32,6 @@ class _MyAppState extends ConsumerState<MyApp> {
     final tokens = ref.watch(authProvider);
     final locale = ref.watch(localeProvider);
 
-    print(' ====== access token ===== ');
-    print(tokens.accessToken);
-
     return MaterialApp(
       title: 'Flutter Demo',
       localizationsDelegates: [
@@ -45,7 +42,7 @@ class _MyAppState extends ConsumerState<MyApp> {
       ],
       locale: locale,
       supportedLocales: [Locale('en'), Locale('az')],
-      theme: ThemeData(
+      theme: ThemeData.dark().copyWith(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
       home: Padding(

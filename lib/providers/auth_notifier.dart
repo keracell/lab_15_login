@@ -1,9 +1,11 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:test_auth_app/apis/auth_api.dart';
 import 'package:test_auth_app/models/tokens_model.dart';
 import 'package:test_auth_app/utils/db.dart';
 
 final authApi = AuthApi();
+final secureStorage = FlutterSecureStorage();
 
 class AuthNotifier extends StateNotifier<TokensModel> {
   AuthNotifier() : super(TokensModel(accessToken: '', refreshToken: ''));
@@ -14,6 +16,9 @@ class AuthNotifier extends StateNotifier<TokensModel> {
 
     final accessToken = data[0]["access_token"] as String;
     final refreshToken = data[0]["refresh_token"] as String;
+
+    final username = await secureStorage.read(key: 'username');
+    print('  =======  username = $username =======');
 
     state = TokensModel(accessToken: accessToken, refreshToken: refreshToken);
   }

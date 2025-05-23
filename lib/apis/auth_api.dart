@@ -14,6 +14,10 @@ class AuthApi {
 
     final Map<String, dynamic> data = json.decode(response.body);
 
+    if (data["message"] == "Invalid credentials") {
+      throw Exception(data["message"]);
+    }
+
     final accessToken = data["accessToken"];
     final refreshToken = data["refreshToken"];
 
